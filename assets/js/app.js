@@ -602,6 +602,11 @@ function renderCertifications(certList) {
   container.innerHTML = certList
     .map((cert, idx) => `
       <div class="glass-card p-5 relative group transition-all duration-300 scroll-zoom-item stagger-${(idx % 3) + 1}">
+        ${cert.imageUrl ? `
+          <a href="${cert.verifyUrl}" target="_blank" rel="noopener noreferrer" class="cert-image-wrap block mb-4 rounded-xl overflow-hidden border border-[#62451F] bg-[#070604]" title="Open certificate">
+            <img src="${cert.imageUrl}" alt="${cert.title}" class="cert-image w-full object-cover" loading="lazy">
+          </a>
+        ` : ''}
         <div class="flex items-center justify-between mb-3">
           <div class="w-10 h-10 rounded-xl bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] group-hover:scale-110 transition-transform">
             <i data-lucide="${cert.icon}" class="w-5 h-5 text-[#C9AB7D]"></i>
