@@ -10,7 +10,7 @@ window.portfolioConfig = {
       'Web Developer',
       'AI/ML Enthusiast'
     ],
-    resumeUrl: '#'
+    resumeUrl: 'https://github.com/MishraAkshat-pixel/Portfolio2/blob/main/resume.pdf'
   },
 
   socialLinks: {
