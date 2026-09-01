@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akshat Mishra | B.Tech CSE (AI & ML) Student Portfolio</title>
+  <meta name="description" content="Portfolio of Akshat Mishra — 2nd Year B.Tech CSE (AI & ML) student at Lovely Professional University. Software Development, C++ DSA, Python, Web Technologies, and practical engineering projects." />
+  <meta name="keywords" content="Akshat Mishra, LPU, B.Tech CSE, AI ML, Software Developer, C++, DSA, Python, Web Developer, Student Portfolio" />
+  <meta name="author" content="Akshat Mishra" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Akshat Mishra | B.Tech CSE Student Portfolio" />
+  <meta property="og:description" content="2nd-year B.Tech CSE (AI & ML) student at LPU — Software Development, C++ DSA, Python, Web Technologies." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0E0C09',
+            'bg-secondary': '#161410',
+            card: '#070604',
+            gold: '#C9AB7D',
+            'gold-light': '#D6BB93',
+            'gold-dark': '#62451F',
+            text: '#E8DCC8',
+            'text-muted': '#A89576'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body class="bg-[#0E0C09] text-[#E8DCC8] selection:bg-[#62451F] selection:text-[#D6BB93]">
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scroll-progress"></div>
+
+  <!-- Ambient Glow Blobs -->
+  <div class="ambient-glow ambient-gold w-96 h-96 top-10 left-10"></div>
+  <div class="ambient-glow ambient-gold-dark w-96 h-96 top-[800px] right-10"></div>
+  <div class="ambient-glow ambient-gold w-96 h-96 top-[2200px] left-1/4"></div>
+  <div class="ambient-glow ambient-gold-dark w-96 h-96 top-[3800px] right-1/3"></div>
+  <div class="ambient-glow ambient-gold w-96 h-96 top-[5500px] left-10"></div>
+
+  <!-- Background Particle Canvas -->
+  <canvas id="bg-particles-canvas"></canvas>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- =========================================================
+       NAVIGATION BAR
+       ========================================================= -->
+  <header id="main-navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-4 md:px-8 bg-[#161410]/80 backdrop-blur-md border-b border-[#62451F]">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2 group">
+        <span class="font-mono text-xl font-extrabold tracking-wider text-[#D6BB93] group-hover:text-[#C9AB7D] transition-colors">
+          &lt; AKSHAT /&gt;
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-[#A89576]">
+        <a href="#home" class="nav-link hover:text-[#D6BB93] transition-colors">Home</a>
+        <a href="#about" class="nav-link hover:text-[#D6BB93] transition-colors">About Me</a>
+        <a href="#skills" class="nav-link hover:text-[#D6BB93] transition-colors">Skills</a>
+        <a href="#projects" class="nav-link hover:text-[#D6BB93] transition-colors">Projects</a>
+        <a href="#education" class="nav-link hover:text-[#D6BB93] transition-colors">Education</a>
+        <a href="#certifications" class="nav-link hover:text-[#D6BB93] transition-colors">Certifications</a>
+        <a href="#connect" class="nav-link hover:text-[#D6BB93] transition-colors">Connect</a>
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="hidden sm:flex items-center gap-3">
+        <button id="open-guide-modal-btn" class="px-3.5 py-2 text-xs font-mono font-medium rounded-lg bg-[#161410] text-[#D6BB93] border border-[#62451F] hover:border-[#C9AB7D] hover:bg-[#070604] transition-all flex items-center gap-1.5" title="Customization Guide">
+          <i data-lucide="settings" class="w-3.5 h-3.5 text-[#C9AB7D]"></i>
+          <span>Customize</span>
+        </button>
+        <a href="#connect" class="btn-primary px-4 py-2 text-xs rounded-lg flex items-center gap-1.5">
+          <span>Connect With Me</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-lg bg-[#161410] border border-[#62451F] text-[#E8DCC8] hover:text-[#D6BB93]" aria-label="Toggle Navigation">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="hidden lg:hidden mt-3 p-5 rounded-2xl glass-card border border-[#62451F]">
+      <div class="flex flex-col gap-3 text-sm font-medium text-[#E8DCC8]">
+        <a href="#home" class="hover:text-[#D6BB93] py-1">Home</a>
+        <a href="#about" class="hover:text-[#D6BB93] py-1">About Me</a>
+        <a href="#skills" class="hover:text-[#D6BB93] py-1">Skills</a>
+        <a href="#projects" class="hover:text-[#D6BB93] py-1">Projects</a>
+        <a href="#education" class="hover:text-[#D6BB93] py-1">Education</a>
+        <a href="#certifications" class="hover:text-[#D6BB93] py-1">Certifications</a>
+        <a href="#connect" class="hover:text-[#D6BB93] py-1">Connect With Me</a>
+        <div class="pt-3 border-t border-[#62451F] flex gap-2">
+          <a href="#connect" class="btn-primary w-full py-2 text-center text-xs font-semibold rounded-lg">Connect With Me</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       1. HOME / HERO SECTION
+       "Who are you? What do you do? What are you interested in?"
+       ========================================================= -->
+  <section id="home" class="min-h-screen pt-32 pb-20 px-4 md:px-8 flex items-center relative z-10">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+      <!-- Left: Introduction -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- Status Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono font-medium">
+          <span class="w-2 h-2 rounded-full bg-[#C9AB7D] animate-ping"></span>
+          <span>AVAILABLE FOR LEARNING • BUILDING • INTERNSHIPS</span>
+        </div>
+
+        <!-- Headline -->
+        <div>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold font-display tracking-tight text-[#E8DCC8] leading-tight">
+            Hi, I'm <span class="text-gradient-gold">Akshat Mishra</span>
+          </h1>
+          <p class="mt-2 text-lg sm:text-xl font-semibold text-[#C9AB7D] font-display">
+            B.Tech CSE (AI & ML) Student | C++ & DSA Enthusiast | Aspiring Software Developer
+          </p>
+          <div class="mt-2 text-xl sm:text-2xl font-semibold text-[#A89576] flex items-center gap-2 font-display">
+            <span>I am a</span>
+            <span id="typewriter-text" class="text-[#D6BB93] min-h-[1.5em] border-r-2 border-[#C9AB7D] pr-1"></span>
+          </div>
+        </div>
+
+        <!-- Description (matching template) -->
+        <p class="text-[#E8DCC8] opacity-90 text-base sm:text-lg leading-relaxed max-w-2xl">
+          I am a second-year Computer Science student passionate about <strong class="text-[#D6BB93]">software development</strong>, <strong class="text-[#C9AB7D]">problem-solving</strong>, and <strong class="text-[#D6BB93]">emerging technologies</strong>. I enjoy building practical projects and continuously improving my technical and communication skills.
+        </p>
+
+        <!-- CTA Buttons: [View My Projects] + [Download Resume] -->
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <a href="#projects" class="btn-primary px-6 py-3 rounded-xl text-sm flex items-center gap-2">
+            <span>View My Projects</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+
+          <a href="#" id="resume-download-btn" onclick="alert('Resume PDF Placeholder: Add your resume path in assets/js/config.js → personal.resumeUrl'); return false;" class="btn-secondary px-6 py-3 rounded-xl text-sm flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4 text-[#C9AB7D]"></i>
+            <span>Download Resume</span>
+          </a>
+
+          <a href="#connect" class="px-5 py-3 rounded-xl font-mono text-xs font-medium text-[#A89576] hover:text-[#D6BB93] bg-[#161410] border border-[#62451F] hover:border-[#C9AB7D] transition-all flex items-center gap-2">
+            <i data-lucide="message-square" class="w-4 h-4 text-[#C9AB7D]"></i>
+            <span>Let's Connect</span>
+          </a>
+        </div>
+
+        <!-- Mindset -->
+        <div class="pt-4 flex items-center gap-4 text-xs font-mono text-[#A89576]">
+          <span class="text-[#C9AB7D]">&gt;</span>
+          <span>Core Mindset: <span class="text-[#E8DCC8]">Learn → Build → Solve → Improve</span></span>
+        </div>
+      </div>
+
+      <!-- Right: Interactive 3D Canvas -->
+      <div class="lg:col-span-5 relative flex items-center justify-center">
+        <div id="hero-3d-canvas-container" class="relative rounded-3xl overflow-hidden glass-panel border border-[#62451F] shadow-2xl">
+          <div class="absolute top-4 left-4 z-30 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[11px] font-mono text-[#D6BB93] flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#C9AB7D]"></span>
+            <span>Interactive AI Core</span>
+          </div>
+          <div class="absolute bottom-4 right-4 z-20 text-[10px] font-mono text-[#A89576] bg-[#070604] px-2.5 py-1 rounded-md border border-[#62451F]">
+            Rotate & Hover
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       2. ABOUT ME SECTION
+       "Name, Degree, Year, University, Area of Interest,
+        Technical Interests, Strengths, Career Aspiration"
+       ========================================================= -->
+  <section id="about" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="section-header-wrap mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+          <span>// 01. ABOUT ME</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">About Me</h2>
+        <p class="text-[#A89576] text-sm mt-1 max-w-xl">A short professional introduction — who I am, what I do, and where I'm headed.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- About Text (100-150 words professional intro) -->
+        <div class="lg:col-span-5 space-y-5">
+          <div class="glass-card p-6 md:p-8 text-[#E8DCC8] opacity-90 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>
+              I am a second-year <strong class="text-[#D6BB93]">B.Tech Computer Science and Engineering</strong> student with a specialization in <strong class="text-[#C9AB7D]">Artificial Intelligence & Machine Learning</strong> at <strong class="text-[#D6BB93]">Lovely Professional University (LPU), India</strong>.
+            </p>
+            <p>
+              I have developed foundational skills in <strong class="text-[#D6BB93]">C++, Python, SQL</strong>, and modern <strong class="text-[#C9AB7D]">web technologies</strong>. I enjoy solving programming problems and transforming ideas into practical applications.
+            </p>
+            <p>
+              My core strengths lie in <strong class="text-[#D6BB93]">structured analytical thinking, collaborative teamwork</strong>, and <strong class="text-[#C9AB7D]">continuous learning</strong>. My goal is to become a skilled software engineer and work on technology-driven solutions.
+            </p>
+          </div>
+
+          <!-- Quick Highlight Metrics -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="glass-card p-4 text-center">
+              <div class="text-2xl font-extrabold text-[#D6BB93] font-display">2nd</div>
+              <div class="text-xs font-semibold text-[#E8DCC8] mt-1">Year</div>
+              <div class="text-[10px] text-[#A89576]">B.Tech CSE</div>
+            </div>
+            <div class="glass-card p-4 text-center">
+              <div class="text-2xl font-extrabold text-[#C9AB7D] font-display">LPU</div>
+              <div class="text-xs font-semibold text-[#E8DCC8] mt-1">University</div>
+              <div class="text-[10px] text-[#A89576]">Punjab, India</div>
+            </div>
+            <div class="glass-card p-4 text-center">
+              <div class="text-2xl font-extrabold text-[#D6BB93] font-display">AI/ML</div>
+              <div class="text-xs font-semibold text-[#E8DCC8] mt-1">Specialization</div>
+              <div class="text-[10px] text-[#A89576]">Core Focus Area</div>
+            </div>
+            <div class="glass-card p-4 text-center">
+              <div class="text-2xl font-extrabold text-[#C9AB7D] font-display">SDE</div>
+              <div class="text-xs font-semibold text-[#E8DCC8] mt-1">Career Goal</div>
+              <div class="text-[10px] text-[#A89576]">Software Engineer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Portrait -->
+        <div class="lg:col-span-3">
+          <div class="about-profile-card glass-card relative overflow-hidden">
+            <div class="about-profile-glow"></div>
+            <div class="about-profile-topline">
+              <span>01 / PROFILE</span>
+              <span class="about-profile-dot"></span>
+            </div>
+            <div class="about-profile-photo-wrap">
+              <img src="assets/images/akshat-profile.png" alt="Akshat Mishra" class="about-profile-photo" />
+              <div class="about-profile-shine"></div>
+            </div>
+            <div class="about-profile-info">
+              <div>
+                <div class="text-[10px] text-[#A89576] font-mono tracking-widest">IDENTITY</div>
+                <div class="text-lg font-bold text-[#E8DCC8] font-display">Akshat Mishra</div>
+              </div>
+              <span class="about-profile-badge">CSE · AI/ML</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Terminal -->
+        <div class="lg:col-span-4">
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <div class="flex items-center gap-2">
+                <span class="terminal-dot terminal-dot-dark"></span>
+                <span class="terminal-dot terminal-dot-gold"></span>
+                <span class="terminal-dot terminal-dot-light"></span>
+              </div>
+              <span class="text-xs font-mono text-[#A89576]">developer.js — node.js</span>
+              <div class="w-12"></div>
+            </div>
+            <pre class="terminal-body" id="terminal-code-body"></pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3. TECHNICAL SKILLS SECTION
+       "Programming, Web Development, Database, Tools, Other"
+       "Beginner → Intermediate → Advanced classification"
+       ========================================================= -->
+  <section id="skills" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div class="section-header-wrap">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+            <span>// 02. TECHNICAL SKILLS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">Technical Skills</h2>
+          <p class="text-[#A89576] text-sm mt-1 max-w-xl">Classified as Beginner → Intermediate → Advanced. Only skills I actually know and practice.</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button class="skill-filter-btn filter-tab active px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="all">All</button>
+          <button class="skill-filter-btn filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="programming">Programming</button>
+          <button class="skill-filter-btn filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="web">Web Dev</button>
+          <button class="skill-filter-btn filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="database">Database</button>
+          <button class="skill-filter-btn filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="tools">Tools</button>
+          <button class="skill-filter-btn filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="fundamentals">CS Core</button>
+        </div>
+      </div>
+
+      <div id="skills-grid-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. PROJECTS — THE MOST IMPORTANT SECTION
+       "P → T → R → L Formula: Problem, Technology, Result, Learning"
+       "At least 3 projects with GitHub links, descriptions, and tech"
+       ========================================================= -->
+  <section id="projects" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div class="section-header-wrap">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+            <span>// 03. PROJECTS (P → T → R → L)</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">Projects & Practical Work</h2>
+          <p class="text-[#A89576] text-sm mt-1 max-w-xl">Each project follows the <strong class="text-[#D6BB93]">P → T → R → L formula</strong>: Problem, Technology, Result, Learning.</p>
+        </div>
+
+        <!-- Project Category Filters -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button class="project-filter-tab filter-tab active px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="all">All</button>
+          <button class="project-filter-tab filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="software">Software</button>
+          <button class="project-filter-tab filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="web">Web</button>
+          <button class="project-filter-tab filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="aiml">AI / ML</button>
+          <button class="project-filter-tab filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="engineering">Engineering</button>
+          <button class="project-filter-tab filter-tab px-3.5 py-1.5 text-xs rounded-lg border border-[#62451F] text-[#A89576] font-mono transition-all" data-filter="dsa">DSA</button>
+        </div>
+      </div>
+
+      <div id="projects-grid-container" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5. EDUCATION SECTION
+       "Keep it simple. Degree, University, Year."
+       ========================================================= -->
+  <section id="education" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="section-header-wrap mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+          <span>// 04. EDUCATION</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">Education</h2>
+        <p class="text-[#A89576] text-sm mt-1 max-w-xl">My academic qualifications and learning path.</p>
+      </div>
+
+      <div id="education-grid-container" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6. CERTIFICATIONS & ACHIEVEMENTS
+       "Certifications (Coursera, HackerRank, Udemy, etc.)
+        Achievements (Hackathons, Coding Competitions, Community Work)"
+       ========================================================= -->
+  <section id="certifications" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Certifications -->
+      <div class="section-header-wrap mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+          <span>// 05. CERTIFICATIONS & ACHIEVEMENTS</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">Certifications</h2>
+        <p class="text-[#A89576] text-sm mt-1 max-w-xl">Professional certifications and online course completions.</p>
+      </div>
+
+      <div id="certifications-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"></div>
+
+      <!-- Achievements -->
+      <div class="section-header-wrap mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+          <span>// ACHIEVEMENTS & MILESTONES</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">Achievements & Key Milestones</h2>
+        <p class="text-[#A89576] text-sm mt-1 max-w-xl">Hackathons, competitions, community work, and academic accomplishments.</p>
+      </div>
+
+      <div id="achievements-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       DSA & PROBLEM SOLVING SHOWCASE
+       ========================================================= -->
+  <section id="dsa" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="section-header-wrap mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+          <span>// 06. PROBLEM SOLVING</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">DSA & Problem-Solving Skills</h2>
+        <p class="text-[#A89576] text-sm mt-1 max-w-2xl">
+          Actively practicing Data Structures & Algorithms using C++ to build logical intuition and solid engineering foundations.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Left: Topic Checklist -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="glass-card p-6 border-[#62451F]">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93]">
+                  <i data-lucide="code" class="w-4 h-4 text-[#C9AB7D]"></i>
+                </div>
+                <h3 class="font-bold text-[#E8DCC8] text-base font-display">LeetCode Practice</h3>
+              </div>
+              <span class="text-xs font-mono text-[#D6BB93] px-2.5 py-0.5 rounded bg-[#161410] border border-[#62451F]">C++ Language</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="p-3 rounded-lg bg-[#161410] border border-[#62451F]">
+                <div class="text-[11px] text-[#A89576] font-mono">Problems Solved</div>
+                <div class="text-lg font-bold text-[#E8DCC8] font-display mt-0.5">[UPDATE]</div>
+              </div>
+              <div class="p-3 rounded-lg bg-[#161410] border border-[#62451F]">
+                <div class="text-[11px] text-[#A89576] font-mono">Current Streak</div>
+                <div class="text-lg font-bold text-[#E8DCC8] font-display mt-0.5">[UPDATE]</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-6">
+            <h3 class="text-sm font-bold text-[#E8DCC8] mb-3 font-display flex items-center gap-2">
+              <i data-lucide="check-square" class="w-4 h-4 text-[#C9AB7D]"></i>
+              <span>Core Topics Practiced</span>
+            </h3>
+            <div id="dsa-topics-container" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- Right: Code Viewer -->
+        <div class="lg:col-span-7">
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <div id="dsa-code-tabs" class="flex items-center gap-1 overflow-x-auto"></div>
+              <button id="dsa-copy-btn" class="text-xs font-mono text-[#E8DCC8] hover:text-[#D6BB93] px-2.5 py-1 rounded bg-[#161410] border border-[#62451F] transition-colors flex items-center gap-1.5">
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-[#C9AB7D]"></i>
+                <span>Copy Code</span>
+              </button>
+            </div>
+            <div class="px-5 py-3 bg-[#161410] border-b border-[#62451F] flex flex-wrap items-center justify-between gap-2">
+              <span id="dsa-snippet-title" class="text-xs font-semibold text-[#E8DCC8] font-mono">Two Sum (Hash Map in C++)</span>
+              <span id="dsa-snippet-complexity" class="text-[11px] font-mono text-[#D6BB93] px-2 py-0.5 rounded bg-[#070604] border border-[#62451F]">Time: O(n) | Space: O(n)</span>
+            </div>
+            <pre class="terminal-body" style="min-height: 280px;"><code id="dsa-code-display" class="language-cpp"></code></pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       7. CONNECT WITH ME (GitHub + LinkedIn + Email + Resume)
+       "Separate section for CSE students"
+       ========================================================= -->
+  <section id="connect" class="py-24 px-4 md:px-8 relative z-10 border-t border-[#62451F]">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="section-header-wrap mb-14 text-center max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] text-[#D6BB93] text-xs font-mono mb-3">
+          <span>// 07. CONNECT WITH ME</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-display text-[#E8DCC8]">Connect With Me</h2>
+        <p class="text-[#A89576] text-sm mt-2">GitHub, LinkedIn, Email, and Resume — all in one place.</p>
+      </div>
+
+      <!-- Connect Cards: GitHub, LinkedIn, Email, Resume -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+
+        <!-- GitHub -->
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="glass-card p-6 group text-center flex flex-col items-center gap-4 hover:border-[#C9AB7D] transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] group-hover:scale-110 transition-transform">
+            <i data-lucide="github" class="w-7 h-7 text-[#C9AB7D]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#E8DCC8] font-display group-hover:text-[#D6BB93] transition-colors">GitHub</h3>
+            <p class="text-xs text-[#A89576] mt-1">View my coding projects & repositories</p>
+          </div>
+          <span class="text-xs font-mono text-[#D6BB93] px-3 py-1 rounded-full bg-[#161410] border border-[#62451F]">[ADD GITHUB URL]</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="glass-card p-6 group text-center flex flex-col items-center gap-4 hover:border-[#C9AB7D] transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] group-hover:scale-110 transition-transform">
+            <i data-lucide="linkedin" class="w-7 h-7 text-[#C9AB7D]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#E8DCC8] font-display group-hover:text-[#D6BB93] transition-colors">LinkedIn</h3>
+            <p class="text-xs text-[#A89576] mt-1">Professional profile & networking</p>
+          </div>
+          <span class="text-xs font-mono text-[#D6BB93] px-3 py-1 rounded-full bg-[#161410] border border-[#62451F]">[ADD LINKEDIN URL]</span>
+        </a>
+
+        <!-- Email -->
+        <div class="glass-card p-6 group text-center flex flex-col items-center gap-4 hover:border-[#C9AB7D] transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] group-hover:scale-110 transition-transform">
+            <i data-lucide="mail" class="w-7 h-7 text-[#C9AB7D]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#E8DCC8] font-display group-hover:text-[#D6BB93] transition-colors">Email</h3>
+            <p class="text-xs text-[#A89576] mt-1">Professional email address</p>
+          </div>
+          <button id="copy-email-btn" class="text-xs font-mono text-[#D6BB93] px-3 py-1 rounded-full bg-[#161410] border border-[#62451F] hover:border-[#C9AB7D] transition-all flex items-center gap-1.5">
+            <i data-lucide="copy" class="w-3 h-3 text-[#C9AB7D]"></i>
+            <span>Copy Email</span>
+          </button>
+        </div>
+
+        <!-- Resume -->
+        <a href="#" onclick="alert('Resume PDF Placeholder: Add your resume in assets/js/config.js → personal.resumeUrl'); return false;" class="glass-card p-6 group text-center flex flex-col items-center gap-4 hover:border-[#C9AB7D] transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] group-hover:scale-110 transition-transform">
+            <i data-lucide="file-text" class="w-7 h-7 text-[#C9AB7D]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#E8DCC8] font-display group-hover:text-[#D6BB93] transition-colors">Resume</h3>
+            <p class="text-xs text-[#A89576] mt-1">Downloadable PDF resume</p>
+          </div>
+          <span class="text-xs font-mono text-[#D6BB93] px-3 py-1 rounded-full bg-[#161410] border border-[#62451F]">[ADD RESUME PDF]</span>
+        </a>
+
+      </div>
+
+      <!-- Contact Form -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+        <!-- Left: Quick Info -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="glass-card p-6 border-[#62451F]">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5 text-[#C9AB7D]"></i>
+              </div>
+              <div>
+                <div class="text-xs text-[#A89576] font-mono">Location / University</div>
+                <div class="text-sm font-semibold text-[#E8DCC8]">Lovely Professional University (LPU), Punjab, India</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 border-[#62451F]">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] shrink-0">
+                <i data-lucide="clock" class="w-5 h-5 text-[#C9AB7D]"></i>
+              </div>
+              <div>
+                <div class="text-xs text-[#A89576] font-mono">Status & Availability</div>
+                <div class="text-sm font-semibold text-[#D6BB93]">Available for Internships, Collaborations & Projects</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 border-[#62451F]">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93] shrink-0">
+                <i data-lucide="code" class="w-5 h-5 text-[#C9AB7D]"></i>
+              </div>
+              <div>
+                <div class="text-xs text-[#A89576] font-mono">LeetCode Profile</div>
+                <div class="text-sm font-semibold text-[#E8DCC8]"><a href="https://leetcode.com/" target="_blank" class="hover:text-[#D6BB93] transition-colors">[ADD LEETCODE URL]</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="lg:col-span-7">
+          <div class="glass-card p-8 border-[#62451F]">
+            <h3 class="text-lg font-bold text-[#E8DCC8] font-display mb-4 flex items-center gap-2">
+              <i data-lucide="send" class="w-5 h-5 text-[#C9AB7D]"></i>
+              <span>Send a Message</span>
+            </h3>
+            <form id="contact-form" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-name" class="block text-xs font-mono text-[#A89576] mb-1.5">Your Name *</label>
+                  <input type="text" id="contact-name" required placeholder="e.g. Alex Sharma" class="w-full px-4 py-2.5 rounded-lg bg-[#161410] border border-[#62451F] text-[#E8DCC8] placeholder-[#A89576]/60 text-sm focus:outline-none focus:border-[#C9AB7D] transition-colors" />
+                </div>
+                <div>
+                  <label for="contact-email" class="block text-xs font-mono text-[#A89576] mb-1.5">Your Email *</label>
+                  <input type="email" id="contact-email" required placeholder="e.g. alex@example.com" class="w-full px-4 py-2.5 rounded-lg bg-[#161410] border border-[#62451F] text-[#E8DCC8] placeholder-[#A89576]/60 text-sm focus:outline-none focus:border-[#C9AB7D] transition-colors" />
+                </div>
+              </div>
+              <div>
+                <label for="contact-subject" class="block text-xs font-mono text-[#A89576] mb-1.5">Subject</label>
+                <input type="text" id="contact-subject" placeholder="e.g. Internship Opportunity / Collaboration" class="w-full px-4 py-2.5 rounded-lg bg-[#161410] border border-[#62451F] text-[#E8DCC8] placeholder-[#A89576]/60 text-sm focus:outline-none focus:border-[#C9AB7D] transition-colors" />
+              </div>
+              <div>
+                <label for="contact-message" class="block text-xs font-mono text-[#A89576] mb-1.5">Message *</label>
+                <textarea id="contact-message" rows="4" required placeholder="Hi Akshat, I came across your portfolio..." class="w-full px-4 py-2.5 rounded-lg bg-[#161410] border border-[#62451F] text-[#E8DCC8] placeholder-[#A89576]/60 text-sm focus:outline-none focus:border-[#C9AB7D] transition-colors resize-none"></textarea>
+              </div>
+              <button type="submit" class="btn-primary w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2">
+                <span>Send Message</span>
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="py-12 px-4 md:px-8 border-t border-[#62451F] bg-[#0E0C09] relative z-10 text-xs text-[#A89576]">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-center md:text-left">
+        <div class="font-mono text-lg font-bold text-[#D6BB93] mb-1">&lt; AKSHAT MISHRA /&gt;</div>
+        <div>B.Tech CSE (AI &amp; ML) | Lovely Professional University (LPU)</div>
+      </div>
+      <div class="text-center italic text-[#A89576]">
+        "Built with curiosity, code &amp; caffeine."
+      </div>
+      <div class="flex flex-col md:items-end items-center gap-2">
+        <div class="flex items-center gap-3 text-[#A89576]">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="hover:text-[#D6BB93] transition-colors" title="GitHub [ADD URL]"><i data-lucide="github" class="w-4 h-4"></i></a>
+          <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="hover:text-[#D6BB93] transition-colors" title="LinkedIn [ADD URL]"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          <a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer" class="hover:text-[#D6BB93] transition-colors" title="LeetCode [ADD URL]"><i data-lucide="code" class="w-4 h-4"></i></a>
+          <a href="mailto:akshat.mishra.dev@example.com" class="hover:text-[#D6BB93] transition-colors" title="Email [ADD URL]"><i data-lucide="mail" class="w-4 h-4"></i></a>
+        </div>
+        <div>&copy; 2026 Akshat Mishra. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       CUSTOMIZATION MODAL
+       ========================================================= -->
+  <div id="customization-modal" class="hidden fixed inset-0 z-[100000] flex items-center justify-center p-4 modal-backdrop">
+    <div class="glass-card max-w-2xl w-full p-6 sm:p-8 border-[#C9AB7D] bg-[#070604] relative max-h-[90vh] overflow-y-auto">
+
+      <button id="close-guide-modal-btn" class="absolute top-5 right-5 p-2 rounded-lg bg-[#161410] text-[#A89576] hover:text-[#E8DCC8] border border-[#62451F]">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-lg bg-[#161410] border border-[#62451F] flex items-center justify-center text-[#D6BB93]">
+          <i data-lucide="sparkles" class="w-5 h-5 text-[#C9AB7D]"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-[#E8DCC8] font-display">How to Customize This Portfolio</h3>
+          <p class="text-xs text-[#A89576] font-mono">All data is in: assets/js/config.js</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs text-[#E8DCC8]">
+        <div class="p-3.5 rounded-lg bg-[#161410] border border-[#62451F]">
+          <span class="font-mono text-[#D6BB93] font-semibold block mb-1">📁 Central Configuration File:</span>
+          <p class="text-[#A89576]">Everything is centralized in: <code class="text-[#D6BB93] bg-[#070604] px-1.5 py-0.5 rounded border border-[#62451F]">assets/js/config.js</code></p>
+        </div>
+
+        <ul class="space-y-2.5">
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">1.</span><span><strong>GitHub URL:</strong> Update <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">socialLinks.github</code></span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">2.</span><span><strong>LinkedIn URL:</strong> Update <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">socialLinks.linkedin</code></span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">3.</span><span><strong>LeetCode URL & Stats:</strong> Update <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">socialLinks.leetcode</code> and DSA stats</span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">4.</span><span><strong>Email Address:</strong> Update <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">socialLinks.email</code></span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">5.</span><span><strong>Resume PDF:</strong> Place your PDF in <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">assets/</code> and update <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">personal.resumeUrl</code></span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">6.</span><span><strong>Projects:</strong> Edit the <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">projects</code> array with your P→T→R→L details</span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">7.</span><span><strong>Education:</strong> Update your school names and years in <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">education</code> array</span></li>
+          <li class="flex items-start gap-2"><span class="text-[#C9AB7D] font-mono font-bold">8.</span><span><strong>Certifications:</strong> Add your real certificates with verify links in <code class="text-[#E8DCC8] bg-[#161410] px-1 border border-[#62451F]">certifications</code> array</span></li>
+        </ul>
+
+        <div class="pt-4 border-t border-[#62451F] flex justify-end">
+          <button onclick="document.getElementById('customization-modal').classList.add('hidden')" class="btn-primary px-5 py-2 rounded-lg text-xs font-semibold">
+            Got it!
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/three-scene.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
